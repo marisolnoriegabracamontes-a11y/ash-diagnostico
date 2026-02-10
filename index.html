@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -122,10 +123,9 @@
             transition: var(--transition);
             position: relative;
             cursor: pointer;
-            height: 400px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            min-height: 420px;
         }
 
         .service-card:hover {
@@ -170,9 +170,11 @@
         }
 
         .service-features {
-            list-style: none;
-            margin-bottom: var(--spacing-lg);
-        }
+            .service-features {
+    list-style: none;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
 
         .service-features li {
             font-size: 13px;
@@ -787,6 +789,32 @@
             .semaphore-grid {
                 grid-template-columns: 1fr;
             }
+
+@media (max-width: 768px) {
+    .services-grid {
+        gap: 20px; /* Menor separación en móviles */
+    }
+    
+    .service-card {
+        padding: 24px; /* Menos padding en móviles */
+        min-height: 380px; /* Un poco menos de altura */
+    }
+    
+    .service-title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-card {
+        min-height: auto; /* Altura automática */
+        padding: 20px;
+    }
+    
+    .service-features li {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
         }
     </style>
     <!-- Inter Font -->
@@ -806,52 +834,52 @@
         
         <div class="services-grid">
             <!-- ASH Personas -->
-            <div class="service-card" data-service="personas">
-                <div>
-                    <div class="service-header">
-                        <div class="service-title">ASH Personas</div>
-                        <div class="service-subtitle">Evaluación de estabilidad humana y dependencia crítica en la estructura organizacional.</div>
-                    </div>
-                    
-                    <div class="service-duration">Duración: 4 minutos</div>
-                    
-                    <ul class="service-features">
-                        <li>Analiza dependencia de personas clave</li>
-                        <li>Evalúa documentación y transferencia de conocimiento</li>
-                        <li>Identifica cuellos de botella humanos</li>
-                        <li>Mide resiliencia ante ausencias críticas</li>
-                    </ul>
-                </div>
-                
-                <button class="service-btn" onclick="startDiagnostic('personas')">
-                    Iniciar diagnóstico
-                </button>
-            </div>
+<div class="service-card" onclick="startDiagnostic('personas')">
+    <div>
+        <div class="service-header">
+            <div class="service-title">ASH Personas</div>
+            <div class="service-subtitle">Evaluación de estabilidad humana y dependencia crítica en la estructura organizacional.</div>
+        </div>
+        
+        <div class="service-duration">Duración: 4 minutos</div>
+        
+        <ul class="service-features">
+            <li>Analiza dependencia de personas clave</li>
+            <li>Evalúa documentación y transferencia de conocimiento</li>
+            <li>Identifica cuellos de botella humanos</li>
+            <li>Mide resiliencia ante ausencias críticas</li>
+        </ul>
+    </div>
+    
+    <!-- BOTÓN CORREGIDO -->
+    <div class="service-btn" onclick="startDiagnostic('personas')">
+        Iniciar diagnóstico
+    </div>
+</div>
             
             <!-- ASH Empresas -->
-            <div class="service-card" data-service="empresas">
-                <div>
-                    <div class="service-header">
-                        <div class="service-title">ASH Empresas</div>
-                        <div class="service-subtitle">Evaluación de arquitectura estructural y gobernanza operativa.</div>
-                    </div>
-                    
-                    <div class="service-duration">Duración: 6 minutos</div>
-                    
-                    <ul class="service-features">
-                        <li>Diagnostica gobernanza y toma de decisiones</li>
-                        <li>Evalúa flujo financiero y controles</li>
-                        <li>Analiza escalabilidad sostenible</li>
-                        <li>Identifica riesgos estructurales</li>
-                    </ul>
-                </div>
-                
-                <button class="service-btn" onclick="startDiagnostic('empresas')">
-                    Iniciar diagnóstico
-                </button>
-            </div>
+<div class="service-card" onclick="startDiagnostic('empresas')">
+    <div>
+        <div class="service-header">
+            <div class="service-title">ASH Empresas</div>
+            <div class="service-subtitle">Evaluación de arquitectura estructural y gobernanza operativa.</div>
         </div>
+        
+        <div class="service-duration">Duración: 6 minutos</div>
+        
+        <ul class="service-features">
+            <li>Diagnostica gobernanza y toma de decisiones</li>
+            <li>Evalúa flujo financiero y controles</li>
+            <li>Analiza escalabilidad sostenible</li>
+            <li>Identifica riesgos estructurales</li>
+        </ul>
     </div>
+    
+    <!-- BOTÓN CORREGIDO -->
+    <div class="service-btn" onclick="startDiagnostic('empresas')">
+        Iniciar diagnóstico
+    </div>
+</div>
     
     <!-- PANTALLA 2: WIZARD DE DIAGNÓSTICO -->
     <div id="wizardScreen" class="wizard-screen">
@@ -1632,20 +1660,7 @@ Contactar al cliente para programar consulta ejecutiva.
             } catch (error) {
                 // Si falla mailto, mostrar opción manual
                 messageEl.innerHTML = `
-                    <div style="margin-bottom: 10px;">❌ No se pudo abrir el cliente de correo automáticamente.</div>
-                    <div style="font-size: 12px; color: var(--steel);">
-                        Por favor, copia el siguiente texto y envíalo manualmente a tu consultor:
-                    </div>
-                    <textarea style="width: 100%; height: 200px; margin-top: 10px; padding: 10px; font-family: monospace; font-size: 12px;" readonly>${body}</textarea>
-                `;
-                messageEl.className = 'form-message error';
-            }
-        }
-
-        function downloadPDF() {
-            alert('Función de descarga de PDF activada.\n\nEn una implementación completa, esto generaría un PDF profesional con los resultados.');
-            // En implementación real, aquí iría la generación de PDF
-        }
+                    messageEl.innerHTML = ` <div style="margin-bottom: 10px;">✅ Diagnóstico enviado correctamente.</div> <div style="font-size: 12px; color: var(--emerald);"> Redirigiendo a la página de confirmación... </div> `; messageEl.className = 'form-message success'; // Redirige después de 2 segundos setTimeout(() => { // Guardar datos temporalmente para mostrar en la página de gracias const diagnosticData = { clientName: name, service: ASH_SERVICES[appState.currentService].name, timestamp: new Date().toLocaleString('es-MX'), priority: appState.results.priority }; // Guardar en sessionStorage para la página de gracias sessionStorage.setItem('lastDiagnostic', JSON.stringify(diagnosticData)); // Redirigir a la página de gracias window.location.href = 'gracias.html'; }, 2000);
 
         // ============================================
         // INICIALIZACIÓN
