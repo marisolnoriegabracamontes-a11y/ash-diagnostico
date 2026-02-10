@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación | ASH Diagnóstico</title>
+    <style>
+        :root {
+            --carbon: #0A0A0A;
+            --platinum: #F8F8F8;
+            --steel: #666666;
+            --silver: #E0E0E0;
+            --emerald: #10B981;
+            --royal: #2D1B33;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--platinum);
+            color: var(--carbon);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .logo {
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 6px;
+            color: var(--carbon);
+            text-decoration: none;
+            margin-bottom: 60px;
+            display: inline-block;
+        }
+        
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            background: var(--emerald);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 40px;
+            font-size: 40px;
+            color: white;
+            animation: scaleIn 0.5s ease;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: var(--steel);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .info-card {
+            background: white;
+            border: 1px solid var(--silver);
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--silver);
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-size: 13px;
+            color: var(--steel);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .info-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--carbon);
+        }
+        
+        .priority-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--royal);
+            color: white;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+        
+        .next-steps {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-top: 1px solid var(--silver);
+        }
+        
+        .next-steps h3 {
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--steel);
+            margin-bottom: 20px;
+        }
+        
+        .next-steps ul {
+            list-style: none;
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .next-steps li {
+            padding: 10px 0;
+            font-size: 15px;
+            color: var(--steel);
+            position: relative;
+            padding-left: 24px;
+        }
+        
+        .next-steps li:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--emerald);
+        }
+        
+        .actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 14px 32px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid;
+            cursor: pointer;
+            background: var(--carbon);
+            color: white;
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: var(--carbon);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--carbon);
+            border-color: var(--silver);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--carbon);
+            color: white;
+            border-color: var(--carbon);
+        }
+        
+        .footer-note {
+            margin-top: 60px;
+            font-size: 11px;
+            color: var(--steel);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .info-row {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="logo">ASH</a>
+        
+        <div class="checkmark">✓</div>
+        
+        <h1>Diagnóstico enviado</h1>
+        
+        <div class="subtitle">
+            Hemos recibido su evaluación ejecutiva. Un consultor ASH se contactará 
+            con usted en las próximas 24 horas para presentar el análisis completo.
+        </div>
+        
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-label">Cliente</span>
+                <span class="info-value" id="clientName">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Servicio</span>
+                <span class="info-value" id="serviceName">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Fecha</span>
+                <span class="info-value" id="diagnosticDate">—</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Prioridad</span>
+                <span class="info-value">
+                    <span class="priority-badge" id="priorityLevel">—</span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="next-steps">
+            <h3>Próximos pasos</h3>
+            <ul>
+                <li>Revisión del diagnóstico por nuestro equipo ejecutivo</li>
+                <li>Preparación de análisis estructural detallado</li>
+                <li>Contacto para programar consulta inicial (sin costo)</li>
+                <li>Presentación de recomendaciones específicas</li>
+            </ul>
+        </div>
+        
+        <div class="actions">
+            <a href="index.html" class="btn">Realizar otro diagnóstico</a>
+            <a href="#" class="btn-secondary" onclick="window.print()">Imprimir confirmación</a>
+        </div>
+        
+        <div class="footer-note">
+            ASH Diagnóstico Ejecutivo • Confidencial • Todos los derechos reservados
+        </div>
+    </div>
+
+    <script>
+        // Cargar datos del diagnóstico enviado
+        document.addEventListener('DOMContentLoaded', function() {
+            const diagnosticData = JSON.parse(sessionStorage.getItem('lastDiagnostic') || '{}');
+            
+            if (diagnosticData.clientName) {
+                document.getElementById('clientName').textContent = diagnosticData.clientName;
+                document.getElementById('serviceName').textContent = diagnosticData.service;
+                document.getElementById('diagnosticDate').textContent = diagnosticData.timestamp;
+                document.getElementById('priorityLevel').textContent = diagnosticData.priority || 'MEDIA';
+                
+                // Color según prioridad
+                const priorityBadge = document.getElementById('priorityLevel');
+                if (diagnosticData.priority === 'ALTA') {
+                    priorityBadge.style.background = '#C91F37';
+                } else if (diagnosticData.priority === 'MEDIA') {
+                    priorityBadge.style.background = '#F59E0B';
+                } else {
+                    priorityBadge.style.background = '#10B981';
+                }
+            } else {
+                // Si no hay datos, redirigir al inicio
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 3000);
+            }
+            
+            // Limpiar después de mostrar (opcional)
+            // sessionStorage.removeItem('lastDiagnostic');
+        });
+    </script>
+</body>
+</html>
