@@ -1,0 +1,15 @@
+# Denegar acceso a todos
+Order Deny,Allow
+Deny from all
+
+# Permitir solo desde localhost (para desarrollo)
+# Allow from 127.0.0.1
+# Allow from ::1
+
+# Denegar listado de directorios
+Options -Indexes
+
+# Proteger contra acceso directo
+<FilesMatch "\.(json|log|txt)$">
+    Deny from all
+</FilesMatch>

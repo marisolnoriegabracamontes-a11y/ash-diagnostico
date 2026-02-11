@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ASH Empresas | Diagnóstico Estructural</title>
+    
+    <!-- ESTILOS EMBEDDED -->
+    <style>
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1a1a1a;
+            --color-secondary: #333333;
+            --color-accent: #d4af37;
+            --color-light: #f8f9fa;
+            --color-gray: #6c757d;
+            --color-gray-light: #e9ecef;
+            --color-gray-dark: #495057;
+            --color-success: #198754;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+            
+            --font-primary: 'Inter', -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+            --font-size-2xl: 32px;
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--color-light);
+            color: var(--color-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .wizard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============================================
+           WIZARD HEADER
+           ============================================ */
+        .wizard-header {
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .wizard-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .logo-back {
+            color: var(--color-gray);
+            text-decoration: none;
+            font-size: var(--font-size-lg);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .logo-back:hover {
+            background: var(--color-gray-light);
+            color: var(--color-primary);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-ash {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .logo-product {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .product-badge {
+            background: var(--color-primary);
+            color: var(--color-accent);
+            padding: 6px 12px;
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: 1px solid var(--color-accent);
+        }
+
+        /* ============================================
+           PROGRESS BAR
+           ============================================ */
+        .progress-container {
+            margin: var(--spacing-xl) 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--color-gray-light);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* ============================================
+           QUESTION CONTAINER
+           ============================================ */
+        .question-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-header {
+            margin-bottom: var(--spacing-2xl);
+            text-align: center;
+        }
+
+        .dimension-badge {
+            display: inline-block;
+            background: var(--color-gray-light);
+            color: var(--color-gray-dark);
+            padding: 8px 16px;
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .question-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 400;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.3;
+        }
+
+        .question-description {
+            color: var(--color-gray);
+            font-size: var(--font-size-base);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           OPTIONS GRID
+           ============================================ */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .option-card {
+            background: white;
+            border: 2px solid var(--color-gray-light);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .option-card.selected {
+            border-color: var(--color-primary);
+            background: var(--color-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .option-card.selected::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--color-primary);
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: var(--color-gray-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            transition: all var(--transition-base);
+        }
+
+        .option-card.selected .option-letter {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .option-text {
+            font-size: var(--font-size-base);
+            color: var(--color-gray-dark);
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-xl) 0;
+            border-top: 1px solid var(--color-gray-light);
+            margin-top: auto;
+        }
+
+        .btn-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: 12px 24px;
+            border-radius: var(--border-radius-md);
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border: none;
+            background: var(--color-gray-light);
+            color: var(--color-gray-dark);
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: var(--color-gray);
+            color: white;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: var(--color-secondary);
+            transform: translateX(4px);
+        }
+
+        .counter {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+        }
+
+        /* ============================================
+           LOADING & COMPLETION
+           ============================================ */
+        .loading-screen, .completion-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--color-gray-light);
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .completion-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--color-success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .wizard-container {
+                padding: 0 var(--spacing-md);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-sm);
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .question-title {
+                font-size: var(--font-size-xl);
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .btn-nav {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="wizard-container">
+        <!-- Header -->
+        <header class="wizard-header">
+            <div class="header-content">
+                <div class="wizard-logo">
+                    <a href="auth-empresas.html" class="logo-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="logo-text">
+                        <span class="logo-ash">ASH</span>
+                        <span class="logo-product">Empresas</span>
+                    </div>
+                </div>
+                <div class="product-badge">
+                    ESTABILIDAD ESTRUCTURAL
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-info">
+                <span id="currentStep">Pregunta 1 de 25</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Question Container (dynamically loaded) -->
+        <main class="question-container" id="questionContainer">
+            <!-- Las preguntas se cargan aquí dinámicamente -->
+        </main>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="btn-nav" id="btnPrev" disabled>
+                <i class="fas fa-arrow-left"></i>
+                <span>Anterior</span>
+            </button>
+            
+            <div class="counter" id="questionCounter">
+                Pregunta <span id="currentQuestion">1</span>/25
+            </div>
+            
+            <button class="btn-nav btn-next" id="btnNext">
+                <span>Siguiente</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Datos del cuestionario Empresas
+        const cuestionarioEmpresas = {
+            producto: 'empresas',
+            dimensiones: [
+                {
+                    nombre: 'Gobernanza',
+                    descripcion: 'Estructura de gobierno y toma de decisiones',
+                    preguntas: [
+                        {
+                            id: 1,
+                            texto: '¿Cómo se toman las decisiones estratégicas en la organización

@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ASH Personas | Snapshot Ejecutivo</title>
+    
+    <!-- ESTILOS EMBEDDED -->
+    <style>
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1a1a1a;
+            --color-secondary: #333333;
+            --color-accent: #d4af37;
+            --color-light: #f8f9fa;
+            --color-gray: #6c757d;
+            --color-gray-light: #e9ecef;
+            --color-gray-dark: #495057;
+            --color-success: #198754;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+            --color-info: #0dcaf0;
+            
+            --font-primary: 'Inter', -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+            --font-size-2xl: 32px;
+            --font-size-3xl: 48px;
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            --border-radius-2xl: 24px;
+            
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-xl: 0 16px 48px rgba(0,0,0,0.16);
+            
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--color-light);
+            color: var(--color-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .results-header {
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .results-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .logo-back {
+            color: var(--color-gray);
+            text-decoration: none;
+            font-size: var(--font-size-lg);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .logo-back:hover {
+            background: var(--color-gray-light);
+            color: var(--color-primary);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-ash {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .logo-product {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .product-badge {
+            background: var(--color-primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-gray-light);
+            background: white;
+            color: var(--color-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ============================================
+           HERO RESULTS
+           ============================================ */
+        .hero-results {
+            text-align: center;
+            padding: var(--spacing-2xl) 0;
+            margin-bottom: var(--spacing-2xl);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 300;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .results-subtitle {
+            color: var(--color-gray);
+            font-size: var(--font-size-lg);
+            max-width: 600px;
+            margin: 0 auto var(--spacing-2xl);
+        }
+
+        /* ============================================
+           STATUS INDICATORS
+           ============================================ */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .status-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--color-gray-light);
+            text-align: center;
+            transition: all var(--transition-base);
+        }
+
+        .status-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .status-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto var(--spacing-md);
+        }
+
+        .status-icon.estable {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-icon.alert {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-icon.critico {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 300;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .status-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           RADAR CHART CONTAINER
+           ============================================ */
+        .radar-container {
+            background: white;
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radar-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+        }
+
+        .radar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .radar-title {
+            font-size: var(--font-size-xl);
+            font-weight: 500;
+        }
+
+        .radar-canvas-container {
+            height: 400px;
+            position: relative;
+        }
+
+        #radarChart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* ============================================
+           TRAFFIC LIGHTS
+           ============================================ */
+        .traffic-lights {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .lights-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-lg);
+            font-weight: 500;
+        }
+
+        .lights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .light-item {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--color-gray-light);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            transition: all var(--transition-base);
+        }
+
+        .light-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .light-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .light-indicator.verde {
+            background: var(--color-success);
+            box-shadow: 0 0 10px rgba(25, 135, 84, 0.3);
+        }
+
+        .light-indicator.amarillo {
+            background: var(--color-warning);
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+        }
+
+        .light-indicator.rojo {
+            background: var(--color-danger);
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.3);
+        }
+
+        .light-text {
+            flex: 1;
+        }
+
+        .light-dimension {
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .light-score {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+        }
+
+        /* ============================================
+           KEY FINDINGS
+           ============================================ */
+        .findings-container {
+            background: white;
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .findings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .findings-title {
+            font-size: var(--font-size-xl);
+            font-weight: 500;
+        }
+
+        .findings-count {
+            background: var(--color-gray-light);
+            color: var(--color-gray-dark);
+            padding: 4px 12px;
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+
+        .findings-list {
+            list-style: none;
+        }
+
+        .finding-item {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-gray-light);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            transition: all var(--transition-fast);
+        }
+
+        .finding-item:hover {
+            background: var(--color-light);
+        }
+
+        .finding-item:last-child {
+            border-bottom: none;
+        }
+
+        .finding-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .finding-icon.critico {
+            background: #fee2e2;
+            color: var(--color-danger);
+        }
+
+        .finding-icon.alert {
+            background: #fef3c7;
+            color: var(--color-warning);
+        }
+
+        .finding-icon.positivo {
+            background: #d1fae5;
+            color: var(--color-success);
+        }
+
+        .finding-text {
+            flex: 1;
+        }
+
+        .finding-title {
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .finding-description {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+        }
+
+        /* ============================================
+           RECOMMENDATIONS
+           ============================================ */
+        .recommendations {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recommendations::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            opacity: 0.1;
+            transform: translate(100px, -100px);
+        }
+
+        .rec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .rec-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 300;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .rec-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-base);
+        }
+
+        .rec-urgency {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+
+        .rec-list {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .rec-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-lg);
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .rec-number {
+            width: 32px;
+            height: 32px;
+            background: var(--color-accent);
+            color: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .rec-text {
+            flex: 1;
+        }
+
+        .rec-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .btn-rec {
+            padding: 12px 24px;
+            border-radius: var(--border-radius-md);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .results-footer {
+            margin-top: auto;
+            padding: var(--spacing-xl) 0;
+            border-top: 1px solid var(--color-gray-light);
+            text-align: center;
+        }
+
+        .footer-info {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-dark);
+        }
+
+        .footer-contact i {
+            color: var(--color-accent);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .results-container {
+                padding: 0 var(--spacing-md);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .results-title {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .radar-canvas-container {
+                height: 300px;
+            }
+            
+            .lights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .rec-header {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .rec-actions {
+                flex-direction: column;
+            }
+            
+            .btn-rec {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="results-container">
+        <!-- Header -->
+        <header class="results-header">
+            <div class="header-content">
+                <div class="results-logo">
+                    <a href="index.html" class="logo-back">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <div class="logo-text">
+                        <span class="logo-ash">ASH</span>
+                        <span class="logo-product">Personas</span>
+                    </div>
+                </div>
+                <div class="product-badge">
+                    ESTABILIDAD HUMANA
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" id="btnPrint" title="Imprimir">
+                        <i class="fas fa-print"></i>
+                    </button>
+                    <button class="btn-icon" id="btnDownload" title="Descargar PDF">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn-icon" id="btnShare" title="Compartir">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Results -->
+        <section class="hero-results">
+            <h1 class="results-title">Snapshot Ejecutivo</h1>
+            <p class="results-subtitle" id="resultsSubtitle">
+                Diagnóstico de estabilidad humana completado el <span id="fechaDiagnostico">12/03/2024</span>
+            </p>
+            
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-icon estable" id="statusIcon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="status-value" id="promedioGlobal">3.8</div>
+                    <div class="status-label">PROMEDIO GLOBAL</div>
+                </div>
+                
+                <div class="status-card">
+                    <div class="status-icon critico">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="status-value" id="estadoSistema">FRÁGIL</div>
+                    <div class="status-label">ESTADO DEL SISTEMA</div>
+                </div>
+                
+                <div class="status-card">
+                    <div class="status-icon alert">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="status-value" id="prioridadIntervencion">ALTA</div>
+                    <div class="status-label">PRIORIDAD INTERVENCIÓN</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Radar Chart -->
+        <section class="radar-container">
+            <div class="radar-header">
+                <h2 class="radar-title">Perfil de Estabilidad Humana</h2>
+                <div class="radar-legend" id="radarLegend"></div>
+            </div>
+            <div class="radar-canvas-container">
+                <canvas id="radarChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Traffic Lights -->
+        <section class="traffic-lights">
+            <h2 class="lights-title">Estado por Dimensión</h2>
+            <div class="lights-grid" id="trafficLights">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Key Findings -->
+        <section class="findings-container">
+            <div class="findings-header">
+                <h2 class="findings-title">Hallazgos Clave</h2>
+                <span class="findings-count" id="findingsCount">3 hallazgos</span>
+            </div>
+            <ul class="findings-list" id="findingsList">
+                <!-- Se llena dinámicamente -->
+            </ul>
+        </section>
+
+        <!-- Recommendations -->
+        <section class="recommendations">
+            <div class="rec-header">
+                <div>
+                    <h2 class="rec-title">Recomendación Ejecutiva</h2>
+                    <p class="rec-subtitle">Acciones prioritarias basadas en el diagnóstico</p>
+                </div>
+                <div class="rec-urgency" id="urgencyBadge">Intervención requerida</div>
+            </div>
+            
+            <div class="rec-list" id="recommendationsList">
+                <!-- Se llena dinámicamente -->
+            </div>
+            
+            <div class="rec-actions">
+                <a href="mailto:marisol.noriega.bracamontes@gmail.com?subject=ASH%20Personas%20-%20Solicitud%20de%20Intervención&body=Estimada%20Marisol,%0D%0A%0D%0ASolicito%20información%20sobre%20la%20intervención%20recomendada%20en%20el%20diagnóstico%20ASH%20Personas." 
+                   class="btn-rec btn-primary">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Solicitar intervención</span>
+                </a>
+                <a href="index.html" class="btn-rec btn-secondary">
+                    <i class="fas fa-redo"></i>
+                    <span>Nuevo diagnóstico</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="results-footer">
+            <p class="footer-info">
+                Este diagnóstico fue generado automáticamente por el sistema ASH.<br>
+                Para una interpretación personalizada, contacta a tu consultor IEE.
+            </p>
+            <p class="footer-contact">
+                <i class="fas fa-envelope"></i>
+                <span>marisol.noriega.bracamontes@gmail.com</span>
+            </p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Datos de ejemplo (en producción vendrían del servidor)
+        const datosDiagnostico = {
+            producto: 'personas',
+            fecha: new Date().toLocaleDateString('es-ES'),
+            promedioGlobal: 3.8,
+            estadoSistema: 'FRÁGIL',
+            prioridadIntervencion: 'ALTA',
+            dimensiones: [
+                { nombre: 'Liderazgo', valor: 4.2, estado: 'estable' },
+                { nombre: 'Clima Organizacional', valor: 2.1, estado: 'critico' },
+                { nombre: 'Retención', valor: 2.8, estado: 'critico' },
+                { nombre: 'Desempeño', valor: 4.5, estado: 'estable' },
+                { nombre: 'Adaptación', valor: 3.4, estado: 'alerta' }
+            ],
+            hallazgos: [
+                {
+                    titulo: 'Clima organizacional deteriorado',
+                    descripcion: 'Puntuación crítica en ambiente laboral y satisfacción',
+                    tipo: 'critico'
+                },
+                {
+                    titulo: 'Alto riesgo de rotación',
+                    descripcion: 'Factores de retención en niveles preocupantes',
+                    tipo: 'critico'
+                },
+                {
+                    titulo: 'Liderazgo sólido pero aislado',
+                    descripcion: 'Buena dirección pero desconectada de equipos',
+                    tipo: 'alerta'
+                }
+            ],
+            recomendaciones: [
+                'Implementar programa de clima organizacional urgente',
+                'Revisar políticas de retención y desarrollo profesional',
+                'Establecer canales de comunicación directa liderazgo-equipos'
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar datos en la interfaz
+            document.getElementById('fechaDiagnostico').textContent = datosDiagnostico.fecha;
+            document.getElementById('promedioGlobal').textContent = datosDiagnostico.promedioGlobal;
+            document.getElementById('estadoSistema').textContent = datosDiagnostico.estadoSistema;
+            document.getElementById('prioridadIntervencion').textContent = datosDiagnostico.prioridadIntervencion;
+            document.getElementById('findingsCount').textContent = datosDiagnostico.hallazgos.length + ' hallazgos';
+            document.getElementById('urgencyBadge').textContent = 
+                datosDiagnostico.prioridadIntervencion === 'ALTA' ? 'Intervención urgente' : 
+                datosDiagnostico.prioridadIntervencion === 'MEDIA' ? 'Acción recomendada' : 
+                'Monitoreo continuo';
+
+            // Actualizar icono de estado
+            const statusIcon = document.getElementById('statusIcon');
+            statusIcon.className = 'status-icon ' + 
+                (datosDiagnostico.estadoSistema === 'ESTABLE' ? 'estable' :
+                 datosDiagnostico.estadoSistema === 'ALERTA' ? 'alert' : 'critico');
+
+            // Crear semáforos
+            const trafficLights = document.getElementById('trafficLights');
+            datosDiagnostico.dimensiones.forEach(dim => {
+                const lightItem = document.createElement('div');
+                lightItem.className = 'light-item';
+                
+                const lightClass = dim.estado === 'estable' ? 'verde' : 
+                                  dim.estado === 'alerta' ? 'amarillo' : 'rojo';
+                
+                lightItem.innerHTML = `
+                    <div class="light-indicator ${lightClass}"></div>
+                    <div class="light-text">
+                        <div class="light-dimension">${dim.nombre}</div>
+                        <div class="light-score">${dim.valor}/5.0</div>
+                    </div>
+                `;
+                
+                trafficLights.appendChild(lightItem);
+            });
+
+            // Crear hallazgos
+            const findingsList = document.getElementById('findingsList');
+            datosDiagnostico.hallazgos.forEach((hallazgo, index) => {
+                const findingItem = document.createElement('li');
+                findingItem.className = 'finding-item';
+                
+                findingItem.innerHTML = `
+                    <div class="finding-icon ${hallazgo.tipo}">
+                        <i class="fas fa-${hallazgo.tipo === 'critico' ? 'exclamation-circle' : 
+                                         hallazgo.tipo === 'alerta' ? 'exclamation-triangle' : 'check-circle'}"></i>
+                    </div>
+                    <div class="finding-text">
+                        <div class="finding-title">${hallazgo.titulo}</div>
+                        <div class="finding-description">${hallazgo.descripcion}</div>
+                    </div>
+                `;
+                
+                findingsList.appendChild(findingItem);
+            });
+
+            // Crear recomendaciones
+            const recommendationsList = document.getElementById('recommendationsList');
+            datosDiagnostico.recomendaciones.forEach((rec, index) => {
+                const recItem = document.createElement('div');
+                recItem.className = 'rec-item';
+                
+                recItem.innerHTML = `
+                    <div class="rec-number">${index + 1}</div>
+                    <div class="rec-text">${rec}</div>
+                `;
+                
+                recommendationsList.appendChild(recItem);
+            });
+
+            // Crear gráfico radar
+            crearRadarChart();
+
+            // Botones de acción
+            document.getElementById('btnPrint').addEventListener('click', function() {
+                window.print();
+            });
+
+            document.getElementById('btnDownload').addEventListener('click', function() {
+                alert('Funcionalidad de descarga PDF en desarrollo');
+            });
+
+            document.getElementById('btnShare').addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'ASH Personas - Snapshot Ejecutivo',
+                        text: `Diagnóstico de estabilidad humana: ${datosDiagnostico.estadoSistema}`,
+                        url: window.location.href
+                    });
+                } else {
+                    alert('Compartir no soportado en este navegador');
+                }
+            });
+        });
+
+        function crearRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            const labels = datosDiagnostico.dimensiones.map(d => d.nombre);
+            const data = datosDiagnostico.dimensiones.map(d => d.valor);
+            const backgroundColors = datosDiagnostico.dimensiones.map(d => 
+                d.estado === 'estable' ? 'rgba(25, 135, 84, 0.2)' :
+                d.estado === 'alerta' ? 'rgba(255, 193, 7, 0.2)' :
+                'rgba(220, 53, 69, 0.2)'
+            );
+            const borderColors = datosDiagnostico.dimensiones.map(d => 
+                d.estado === 'estable' ? 'rgb(25, 135, 84)' :
+                d.estado === 'alerta' ? 'rgb(255, 193, 7)' :
+                'rgb(220, 53, 69)'
+            );
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Estabilidad',
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 2,
+                        pointBackgroundColor: borderColors,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1,
+                                backdropColor: 'transparent'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    family: "'Inter', sans-serif"
+                                },
+                                color: '#495057'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}/5`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

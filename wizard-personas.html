@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ASH Personas | Diagnóstico de Estabilidad Humana</title>
+    
+    <!-- ESTILOS EMBEDDED -->
+    <style>
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1a1a1a;
+            --color-secondary: #333333;
+            --color-accent: #d4af37;
+            --color-light: #f8f9fa;
+            --color-gray: #6c757d;
+            --color-gray-light: #e9ecef;
+            --color-gray-dark: #495057;
+            --color-success: #198754;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+            
+            --font-primary: 'Inter', -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+            --font-size-2xl: 32px;
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--color-light);
+            color: var(--color-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .wizard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============================================
+           WIZARD HEADER
+           ============================================ */
+        .wizard-header {
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .wizard-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .logo-back {
+            color: var(--color-gray);
+            text-decoration: none;
+            font-size: var(--font-size-lg);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .logo-back:hover {
+            background: var(--color-gray-light);
+            color: var(--color-primary);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-ash {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .logo-product {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .product-badge {
+            background: var(--color-primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           PROGRESS BAR
+           ============================================ */
+        .progress-container {
+            margin: var(--spacing-xl) 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--color-gray-light);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* ============================================
+           QUESTION CONTAINER
+           ============================================ */
+        .question-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-header {
+            margin-bottom: var(--spacing-2xl);
+            text-align: center;
+        }
+
+        .dimension-badge {
+            display: inline-block;
+            background: var(--color-gray-light);
+            color: var(--color-gray-dark);
+            padding: 8px 16px;
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .question-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 400;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.3;
+        }
+
+        .question-description {
+            color: var(--color-gray);
+            font-size: var(--font-size-base);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           OPTIONS GRID
+           ============================================ */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .option-card {
+            background: white;
+            border: 2px solid var(--color-gray-light);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .option-card.selected {
+            border-color: var(--color-primary);
+            background: var(--color-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .option-card.selected::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--color-primary);
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: var(--color-gray-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            transition: all var(--transition-base);
+        }
+
+        .option-card.selected .option-letter {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .option-text {
+            font-size: var(--font-size-base);
+            color: var(--color-gray-dark);
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-xl) 0;
+            border-top: 1px solid var(--color-gray-light);
+            margin-top: auto;
+        }
+
+        .btn-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: 12px 24px;
+            border-radius: var(--border-radius-md);
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border: none;
+            background: var(--color-gray-light);
+            color: var(--color-gray-dark);
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: var(--color-gray);
+            color: white;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: var(--color-secondary);
+            transform: translateX(4px);
+        }
+
+        .counter {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+        }
+
+        /* ============================================
+           LOADING & COMPLETION SCREENS
+           ============================================ */
+        .loading-screen, .completion-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--color-gray-light);
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .completion-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--color-success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .wizard-container {
+                padding: 0 var(--spacing-md);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-sm);
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .question-title {
+                font-size: var(--font-size-xl);
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .btn-nav {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="wizard-container">
+        <!-- Header -->
+        <header class="wizard-header">
+            <div class="header-content">
+                <div class="wizard-logo">
+                    <a href="auth-personas.html" class="logo-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="logo-text">
+                        <span class="logo-ash">ASH</span>
+                        <span class="logo-product">Personas</span>
+                    </div>
+                </div>
+                <div class="product-badge">
+                    ESTABILIDAD HUMANA
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-info">
+                <span id="currentStep">Pregunta 1 de 25</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Question Container -->
+        <main class="question-container" id="questionContainer">
+            <!-- Las preguntas se cargan aquí dinámicamente -->
+        </main>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="btn-nav" id="btnPrev" disabled>
+                <i class="fas fa-arrow-left"></i>
+                <span>Anterior</span>
+            </button>
+            
+            <div class="counter" id="questionCounter">
+                Pregunta <span id="currentQuestion">1</span>/25
+            </div>
+            
+            <button class="btn-nav btn-next" id="btnNext">
+                <span>Siguiente</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Configuración del cuestionario Personas
+        const CUESTIONARIO = {
+            producto: 'personas',
+            dimensiones: [
+                {
+                    nombre: 'Liderazgo',
+                    descripcion: 'Capacidad de dirección y guía de equipos',
+                    preguntas: [
+                        {
+                            id: 1,
+                            texto: '¿Cómo describiría el estilo de liderazgo predominante en la organización?',
+                            opciones: [
+                                { letra: 'A', texto: 'Autocrático - decisiones centralizadas en la alta dirección' },
+                                { letra: 'B', texto: 'Participativo - involucra a equipos en decisiones importantes' },
+                                { letra: 'C', texto: 'Delegativo - otorga autonomía pero con supervisión periódica' },
+                                { letra: 'D', texto: 'Situacional - adapta el estilo según la situación y personas' }
+                            ]
+                        },
+                        {
+                            id: 2,
+                            texto: '¿Cómo responde el liderazgo ante errores o fracasos del equipo?',
+                            opciones: [
+                                { letra: 'A', texto: 'Con consecuencias disciplinarias inmediatas' },
+                                { letra: 'B', texto: 'Buscando causas raíz sin culpar individualmente' },
+                                { letra: 'C', texto: 'Como oportunidades de aprendizaje y mejora' },
+                                { letra: 'D', texto: 'Evitando el tema para mantener la moral' }
+                            ]
+                        },
+                        {
+                            id: 3,
+                            texto: '¿Cómo se comunica la visión y estrategia organizacional?',
+                            opciones: [
+                                { letra: 'A', texto: 'Solo en reuniones ejecutivas, no se comparte abiertamente' },
+                                { letra: 'B', texto: 'A través de comunicados formales de alta dirección' },
+                                { letra: 'C', texto: 'En reuniones periódicas con todos los niveles' },
+                                { letra: 'D', texto: 'Integrada en el día a día y decisiones cotidianas' }
+                            ]
+                        },
+                        {
+                            id: 4,
+                            texto: '¿Cómo se desarrolla el talento de liderazgo interno?',
+                            opciones: [
+                                { letra: 'A', texto: 'No hay programa formal de desarrollo' },
+                                { letra: 'B', texto: 'Capacitaciones esporádicas sin seguimiento' },
+                                { letra: 'C', texto: 'Programas estructurados con mentoría' },
+                                { letra: 'D', texto: 'Cultura de desarrollo continuo con planes individuales' }
+                            ]
+                        },
+                        {
+                            id: 5,
+                            texto: '¿Cómo se toman las decisiones estratégicas?',
+                            opciones: [
+                                { letra: 'A', texto: 'Unilateralmente por el dueño o director general' },
+                                { letra: 'B', texto: 'En pequeños grupos directivos cerrados' },
+                                { letra: 'C', texto: 'Consultando a mandos medios antes de decidir' },
+                                { letra: 'D', texto: 'Procesos participativos con representación múltiple' }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    nombre: 'Clima Organizacional',
+                    descripcion: 'Ambiente laboral y relaciones interpersonales',
+                    preguntas: [
+                        {
+                            id: 6,
+                            texto: '¿Cómo describiría el nivel de confianza entre colaboradores?',
+                            opciones: [
+                                { letra: 'A', texto: 'Bajo - hay desconfianza y competencia interna' },
+                                { letra: 'B', texto: 'Moderado - confianza limitada a equipos pequeños' },
+                                { letra: 'C', texto: 'Alto - colaboración abierta y apoyo mutuo' },
+                                { letra: 'D', texto: 'Variable - depende del departamento o proyecto' }
+                            ]
+                        },
+                        {
+                            id: 7,
+                            texto: '¿Cómo se manejan los conflictos interpersonales?',
+                            opciones: [
+                                { letra: 'A', texto: 'Se ignoran hasta que escalan' },
+                                { letra: 'B', texto: 'Intervención de supervisores de manera reactiva' },
+                                { letra: 'C', texto: 'Procesos establecidos de resolución de conflictos' },
+                                { letra: 'D', texto: 'Cultura de comunicación directa y asertiva' }
+                            ]
+                        },
+                        {
+                            id: 8,
+                            texto: '¿Cómo es el equilibrio vida-trabajo en la organización?',
+                            opciones: [
+                                { letra: 'A', texto: 'Inexistente - se espera disponibilidad 24/7' },
+                                { letra: 'B', texto: 'Limitado - horarios extendidos son comunes' },
+                                { letra: 'C', texto: 'Respetado - hay políticas de flexibilidad' },
+                                { letra: 'D', texto: 'Promovido - cultura que valora el bienestar integral' }
+                            ]
+                        },
+                        {
+                            id: 9,
+                            texto: '¿Cómo se reconoce y valora el trabajo de los colaboradores?',
+                            opciones: [
+                                { letra: 'A', texto: 'Solo monetariamente, sin reconocimiento público' },
+                                { letra: 'B', texto: 'Eventos anuales de reconocimiento' },
+                                { letra: 'C', texto: 'Reconocimiento frecuente en reuniones de equipo' },
+                                { letra: 'D', texto: 'Cultura de aprecio continuo en múltiples formas' }
+                            ]
+                        },
+                        {
+                            id: 10,
+                            texto: '¿Cómo es la comunicación vertical (entre niveles jerárquicos)?',
+                            opciones: [
+                                { letra: 'A', texto: 'Unidireccional - solo de arriba hacia abajo' },
+                                { letra: 'B', texto: 'Formal - a través de canales establecidos' },
+                                { letra: 'C', texto: 'Abierta - se fomenta la retroalimentación ascendente' },
+                                { letra: 'D', texto: 'Bidireccional fluida - sin barreras jerárquicas' }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    nombre: 'Retención de Talento',
+                    descripcion: 'Capacidad para mantener y desarrollar al personal clave',
+                    preguntas: [
+                        {
+                            id: 11,
+                            texto: '¿Cuál es la tasa aproximada de rotación anual?',
+                            opciones: [
+                                { letra: 'A', texto: 'Más del 25% - rotación muy alta' },
+                                { letra: 'B', texto: '15-25% - rotación preocupante' },
+                                { letra: 'C', texto: '5-15% - dentro de parámetros normales' },
+                                { letra: 'D', texto: 'Menos del 5% - rotación muy baja' }
+                            ]
+                        },
+                        {
+                            id: 12,
+                            texto: '¿Cómo es el programa de desarrollo profesional?',
+                            opciones: [
+                                { letra: 'A', texto: 'No existe programa formal' },
+                                { letra: 'B', texto: 'Capacitaciones esporádicas según necesidades' },
+                                { letra: 'C', texto: 'Plan anual de capacitación para todos' },
+                                { letra: 'D', texto: 'Planes individuales de carrera con mentoría' }
+                            ]
+                        },
+                        {
+                            id: 13,
+                            texto: '¿Cómo se gestionan las promociones internas?',
+                            opciones: [
+                                { letra: 'A', texto: 'No hay criterios claros, son discrecionales' },
+                                { letra: 'B', texto: 'Basadas principalmente en antigüedad' },
+                                { letra: 'C', texto: 'Por desempeño medible y competencias' },
+                                { letra: 'D', texto: 'Sistema transparente con oportunidades equitativas' }
+                            ]
+                        },
+                        {
+                            id: 14,
+                            texto: '¿Cómo es la compensación comparada con el mercado?',
+                            opciones: [
+                                { letra: 'A', texto: 'Por debajo del mercado' },
+                                { letra: 'B', texto: 'En línea con el promedio del mercado' },
+                                { letra: 'C', texto: 'Competitiva, por encima del promedio' },
+                                { letra: 'D', texto: 'Líder en el mercado con beneficios integrales' }
+                            ]
+                        },
+                        {
+                            id: 15,
+                            texto: '¿Cómo se manejan las salidas de colaboradores clave?',
+                            opciones: [
+                                { letra: 'A', texto: 'No hay proceso, simplemente se van' },
+                                { letra: 'B', texto: 'Entrevista de salida sin acciones posteriores' },
+                                { letra: 'C', texto: 'Análisis de causas y plan de retención' },
+                                { letra: 'D', texto: 'Sistema proactivo de retención y sucesión' }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    nombre: 'Desempeño',
+                    descripcion: 'Efectividad y productividad del capital humano',
+                    preguntas: [
+                        {
+                            id: 16,
+                            texto: '¿Cómo se establecen y miden los objetivos individuales?',
+                            opciones: [
+                                { letra: 'A', texto: 'No hay objetivos formales establecidos' },
+                                { letra: 'B', texto: 'Objetivos genéricos sin medición clara' },
+                                { letra: 'C', texto: 'Objetivos SMART con revisiones trimestrales' },
+                                { letra: 'D', texto: 'Sistema integrado con la estrategia organizacional' }
+                            ]
+                        },
+                        {
+                            id: 17,
+                            texto: '¿Cómo es el proceso de evaluación del desempeño?',
+                            opciones: [
+                                { letra: 'A', texto: 'No existe evaluación formal' },
+                                { letra: 'B', texto: 'Evaluación anual sin retroalimentación útil' },
+                                { letra: 'C', texto: 'Evaluaciones semestrales con planes de mejora' },
+                                { letra: 'D', texto: 'Feedback continuo y desarrollo constante' }
+                            ]
+                        },
+                        {
+                            id: 18,
+                            texto: '¿Cómo se maneja el bajo desempeño?',
+                            opciones: [
+                                { letra: 'A', texto: 'Con medidas disciplinarias inmediatas' },
+                                { letra: 'B', texto: 'Advertencias verbales sin plan de mejora' },
+                                { letra: 'C', texto: 'Planes de acción con apoyo y seguimiento' },
+                                { letra: 'D', texto: 'Cultura de mejora continua y desarrollo' }
+                            ]
+                        },
+                        {
+                            id: 19,
+                            texto: '¿Cómo se fomenta la innovación y mejora de procesos?',
+                            opciones: [
+                                { letra: 'A', texto: 'No se fomenta, se sigue lo establecido' },
+                                { letra: 'B', texto: 'Solo en áreas específicas como I+D' },
+                                { letra: 'C', texto: 'Programas de sugerencias con reconocimiento' },
+                                { letra: 'D', texto: 'Cultura de innovación en todos los niveles' }
+                            ]
+                        },
+                        {
+                            id: 20,
+                            texto: '¿Cómo se alinea el desempeño individual con los objetivos organizacionales?',
+                            opciones: [
+                                { letra: 'A', texto: 'No hay alineación visible' },
+                                { letra: 'B', texto: 'Alineación general pero no específica' },
+                                { letra: 'C', texto: 'Objetivos cascada desde la estrategia' },
+                                { letra: 'D', texto: 'Sistema integral con medición de impacto' }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    nombre: 'Adaptación',
+                    descripcion: 'Capacidad de cambio y resiliencia organizacional',
+                    preguntas: [
+                        {
+                            id: 21,
+                            texto: '¿Cómo responde la organización ante cambios del mercado?',
+                            opciones: [
+                                { letra: 'A', texto: 'Lentamente, con resistencia al cambio' },
+                                { letra: 'B', texto: 'Reactivamente, cuando es inevitable' },
+                                { letra: 'C', texto: 'Proactivamente, anticipando tendencias' },
+                                { letra: 'D', texto: 'Ágilmente, como ventaja competitiva' }
+                            ]
+                        },
+                        {
+                            id: 22,
+                            texto: '¿Cómo se gestiona el cambio organizacional?',
+                            opciones: [
+                                { letra: 'A', texto: 'Se impone sin explicación ni preparación' },
+                                { letra: 'B', texto: 'Comunicación básica sin involucramiento' },
+                                { letra: 'C', texto: 'Procesos estructurados de gestión del cambio' },
+                                { letra: 'D', texto: 'Cultura adaptable con participación activa' }
+                            ]
+                        },
+                        {
+                            id: 23,
+                            texto: '¿Cómo se capacita al personal para nuevos desafíos?',
+                            opciones: [
+                                { letra: 'A', texto: 'No hay capacitación para el cambio' },
+                                { letra: 'B', texto: 'Capacitación mínima cuando es necesario' },
+                                { letra: 'C', texto: 'Plan de capacitación para transiciones' },
+                                { letra: 'D', texto: 'Desarrollo continuo de habilidades futuras' }
+                            ]
+                        },
+                        {
+                            id: 24,
+                            texto: '¿Cómo es la tolerancia al riesgo y experimentación?',
+                            opciones: [
+                                { letra: 'A', texto: 'Muy baja, se evitan riesgos' },
+                                { letra: 'B', texto: 'Limitada a áreas específicas' },
+                                { letra: 'C', texto: 'Moderada, con análisis previo' },
+                                { letra: 'D', texto: 'Alta, como motor de innovación' }
+                            ]
+                        },
+                        {
+                            id: 25,
+                            texto: '¿Cómo se aprenden de los fracasos?',
+                            opciones: [
+                                { letra: 'A', texto: 'No se analizan, se ocultan' },
+                                { letra: 'B', texto: 'Análisis superficial sin cambios sistémicos' },
+                                { letra: 'C', texto: 'Revisiones formales con lecciones aprendidas' },
+                                { letra: 'D', texto: 'Cultura de aprendizaje continuo del fracaso' }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Estado del cuestionario
+        const estado = {
+            preguntaActual: 0,
+            respuestas: new Array(25).fill(null),
+            todasLasPreguntas: []
+        };
+
+        // Preparar todas las preguntas en un solo array
+        CUESTIONARIO.dimensiones.forEach(dimension => {
+            estado.todasLasPreguntas = estado.todasLasPreguntas.concat(dimension.preguntas);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const questionContainer = document.getElementById('questionContainer');
+            const btnPrev = document.getElementById('btnPrev');
+            const btnNext = document.getElementById('btnNext');
+            const currentStep = document.getElementById('currentStep');
+            const progressPercent = document.getElementById('progressPercent');
+            const progressFill = document.getElementById('progressFill');
+            const currentQuestion = document.getElementById('currentQuestion');
+            const questionCounter = document.getElementById('questionCounter');
+
+            // Cargar la primera pregunta
+            cargarPregunta();
+
+            // Event listeners
+            btnPrev.addEventListener('click', preguntaAnterior);
+            btnNext.addEventListener('click', preguntaSiguiente);
+
+            function cargarPregunta() {
+                const pregunta = estado.todasLasPreguntas[estado.preguntaActual];
+                
+                // Encontrar la dimensión actual
+                let dimensionActual = '';
+                for (const dim of CUESTIONARIO.dimensiones) {
+                    if (dim.preguntas.some(p => p.id === pregunta.id)) {
+                        dimensionActual = dim.nombre;
+                        break;
+                    }
+                }
+
+                // Actualizar UI
+                currentStep.textContent = `Dimensión: ${dimensionActual}`;
+                currentQuestion.textContent = estado.preguntaActual + 1;
+                
+                const porcentaje = ((estado.preguntaActual + 1) / 25) * 100;
+                progressPercent.textContent = `${Math.round(porcentaje)}%`;
+                progressFill.style.width = `${porcentaje}%`;
+
+                // Actualizar botones
+                btnPrev.disabled = estado.preguntaActual === 0;
+                btnNext.textContent = estado.preguntaActual === 24 ? 'Finalizar' : 'Siguiente';
+
+                // Mostrar pregunta
+                questionContainer.innerHTML = `
+                    <div class="question-header">
+                        <div class="dimension-badge">${dimensionActual}</div>
+                        <h2 class="question-title">${pregunta.texto}</h2>
+                        <p class="question-description">
+                            Selecciona la opción que mejor describa la situación actual
+                        </p>
+                    </div>
+                    
+                    <div class="options-grid" id="optionsGrid">
+                        ${pregunta.opciones.map((opcion, index) => `
+                            <div class="option-card ${estado.respuestas[estado.preguntaActual] === index ? 'selected' : ''}" 
+                                 data-index="${index}">
+                                <div class="option-letter">${opcion.letra}</div>
+                                <div class="option-text">${opcion.texto}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                // Agregar event listeners a las opciones
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        const selectedIndex = parseInt(this.getAttribute('data-index'));
+                        
+                        // Deseleccionar todas
+                        document.querySelectorAll('.option-card').forEach(c => {
+                            c.classList.remove('selected');
+                        });
+                        
+                        // Seleccionar esta
+                        this.classList.add('selected');
+                        
+                        // Guardar respuesta
+                        estado.respuestas[estado.preguntaActual] = selectedIndex;
+                        
+                        // Habilitar siguiente si no estaba
+                        if (btnNext.disabled) {
+                            btnNext.disabled = false;
+                        }
+                    });
+                });
+
+                // Si ya hay respuesta seleccionada, habilitar siguiente
+                if (estado.respuestas[estado.preguntaActual] !== null) {
+                    btnNext.disabled = false;
+                } else {
+                    btnNext.disabled = true;
+                }
+            }
+
+            function preguntaAnterior() {
+                if (estado.preguntaActual > 0) {
+                    estado.preguntaActual--;
+                    cargarPregunta();
+                }
+            }
+
+            async function preguntaSiguiente() {
+                // Validar que haya respuesta seleccionada
+                if (estado.respuestas[estado.preguntaActual] === null) {
+                    alert('Por favor selecciona una opción antes de continuar');
+                    return;
+                }
+
+                // Si es la última pregunta, procesar resultados
+                if (estado.preguntaActual === 24) {
+                    await procesarResultados();
+                    return;
+                }
+
+                // Siguiente pregunta
+                estado.preguntaActual++;
+                cargarPregunta();
+            }
+
+            async function procesarResultados() {
+                // Mostrar pantalla de carga
+                questionContainer.innerHTML = `
+                    <div class="loading-screen">
+                        <div class="loading-spinner"></div>
+                        <h2>Procesando resultados...</h2>
+                        <p>Analizando las respuestas para generar tu diagnóstico personalizado</p>
+                    </div>
+                `;
+
+                // Deshabilitar navegación
+                btnPrev.disabled = true;
+                btnNext.disabled = true;
+
+                // Calcular puntuaciones por dimensión
+                const puntuaciones = {};
+                CUESTIONARIO.dimensiones.forEach((dimension, dimIndex) => {
+                    let suma = 0;
+                    dimension.preguntas.forEach((pregunta, pregIndex) => {
+                        const preguntaGlobalIndex = (dimIndex * 5) + pregIndex;
+                        const respuesta = estado.respuestas[preguntaGlobalIndex];
+                        
+                        // Convertir respuesta A=1, B=2, C=3, D=4 a escala 1-4
+                        // Pero para nuestro análisis, D es la respuesta ideal (4 puntos)
+                        // A es la menos ideal (1 punto)
+                        suma += (respuesta + 1); // +1 porque A=0, B=1, etc.
+                    });
+                    puntuaciones[dimension.nombre] = suma / 5; // Promedio de 5 preguntas
+                });
+
+                // Calcular promedio global
+                const valores = Object.values(puntuaciones);
+                const promedioGlobal = valores.reduce((a, b) => a + b, 0) / valores.length;
+
+                // Determinar estado del sistema
+                let estadoSistema = '';
+                let prioridad = '';
+                
+                if (promedioGlobal >= 3.5) {
+                    estadoSistema = 'ESTABLE';
+                    prioridad = 'BAJA';
+                } else if (promedioGlobal >= 2.5) {
+                    estadoSistema = 'ALERTA';
+                    prioridad = 'MEDIA';
+                } else {
+                    estadoSistema = 'CRÍTICO';
+                    prioridad = 'ALTA';
+                }
+
+                // Preparar datos para enviar
+                const datosResultado = {
+                    producto: 'personas',
+                    respuestas: estado.respuestas,
+                    puntuaciones: puntuaciones,
+                    promedioGlobal: promedioGlobal.toFixed(1),
+                    estadoSistema: estadoSistema,
+                    prioridad: prioridad,
+                    fecha: new Date().toISOString()
+                };
+
+                try {
+                    // Enviar resultados al servidor
+                    const respuesta = await fetch('includes/guardar-resultados.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(datosResultado)
+                    });
+
+                    const resultado = await respuesta.json();
+
+                    if (resultado.success) {
+                        // Redirigir a resultados
+                        setTimeout(() => {
+                            window.location.href = 'results-personas.html';
+                        }, 2000);
+                    } else {
+                        throw new Error(resultado.message || 'Error al guardar resultados');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    
+                    // Mostrar mensaje de error
+                    questionContainer.innerHTML = `
+                        <div class="completion-screen">
+                            <div class="completion-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <h2>Error en el procesamiento</h2>
+                            <p>No se pudieron guardar los resultados. Por favor intenta nuevamente.</p>
+                            <button class="btn-nav btn-next" onclick="location.reload()">
+                                <span>Reintentar</span>
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+            // Verificar sesión activa
+            const sessionData = sessionStorage.getItem('ash_session');
+            if (!sessionData) {
+                window.location.href = 'auth-personas.html';
+            }
+        });
+    </script>
+</body>
+</html>

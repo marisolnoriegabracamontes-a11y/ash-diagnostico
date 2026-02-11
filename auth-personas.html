@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASH | Acceso Restringido</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+        }
+        
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 480px;
+            padding: 48px 40px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        
+        .ash-logo {
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        
+        .auth-subtitle {
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        
+        .product-badge {
+            display: inline-block;
+            background: #f8f9fa;
+            color: #495057;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .auth-form {
+            margin-top: 32px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s;
+            background: #f8f9fa;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #495057;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(73, 80, 87, 0.1);
+        }
+        
+        .btn-auth {
+            width: 100%;
+            padding: 16px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        
+        .btn-auth:hover {
+            background: #343a40;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .auth-footer {
+            margin-top: 32px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 13px;
+            padding-top: 24px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .error-message {
+            background: #fff5f5;
+            color: #c92a2a;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            border: 1px solid #ffc9c9;
+            display: none;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #495057;
+            margin-top: 24px;
+            border: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="ash-logo">ASH</div>
+            <p class="auth-subtitle">Diagnóstico Ejecutivo</p>
+            <span class="product-badge">ASH Personas</span>
+            <h1 style="font-size: 24px; font-weight: 400; color: #1a1a1a;">
+                Acceso Restringido
+            </h1>
+            <p style="color: #6c757d; margin-top: 8px; font-size: 14px;">
+                Ingresa la clave de acceso proporcionada por tu consultor
+            </p>
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            Clave inválida o ya utilizada. Contacta a tu consultor.
+        </div>
+        
+        <form class="auth-form" id="authForm">
+            <div class="form-group">
+                <label for="claveAcceso">Clave de Acceso Única</label>
+                <div class="input-with-icon">
+                    <span class="input-icon">🔑</span>
+                    <input type="text" 
+                           id="claveAcceso" 
+                           name="claveAcceso" 
+                           placeholder="Ej: ASH-P-7B3F-9A2C"
+                           required
+                           autocomplete="off"
+                           autofocus>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-auth">
+                Verificar y Continuar
+            </button>
+        </form>
+        
+        <div class="info-box">
+            <strong>¿No tienes una clave?</strong><br>
+            Esta herramienta es de uso exclusivo para clientes de IEE. 
+            Contacta a tu consultor para obtener acceso autorizado.
+        </div>
+        
+        <div class="auth-footer">
+            &copy; IEE - Intervención Ejecutiva Estratégica. Todos los derechos reservados.
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('authForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const clave = document.getElementById('claveAcceso').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Ocultar error previo
+            errorMessage.style.display = 'none';
+            
+            // Verificar formato básico
+            if (!clave || clave.length < 8) {
+                showError('Clave inválida');
+                return;
+            }
+            
+            // Deshabilitar botón
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Verificando...';
+            
+            try {
+                // Enviar clave al servidor para verificación
+                const response = await fetch('verificar-clave.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        clave: clave,
+                        producto: 'personas' // o 'empresas' según la página
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Guardar clave en sessionStorage para uso posterior
+                    sessionStorage.setItem('ash_clave_valida', clave);
+                    sessionStorage.setItem('ash_producto', 'personas');
+                    
+                    // Redirigir al cuestionario
+                    window.location.href = 'wizard-personas.html';
+                } else {
+                    showError(result.message || 'Clave inválida');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Verificar y Continuar';
+                }
+                
+            } catch (error) {
+                showError('Error de conexión. Intenta nuevamente.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Verificar y Continuar';
+            }
+        });
+        
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

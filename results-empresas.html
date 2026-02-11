@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ASH Empresas | Snapshot Ejecutivo</title>
+    
+    <!-- ESTILOS EMBEDDED -->
+    <style>
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1a1a1a;
+            --color-secondary: #333333;
+            --color-accent: #d4af37;
+            --color-light: #f8f9fa;
+            --color-gray: #6c757d;
+            --color-gray-light: #e9ecef;
+            --color-gray-dark: #495057;
+            --color-success: #198754;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+            --color-info: #0dcaf0;
+            
+            --font-primary: 'Inter', -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+            --font-size-2xl: 32px;
+            --font-size-3xl: 48px;
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            --border-radius-2xl: 24px;
+            
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-xl: 0 16px 48px rgba(0,0,0,0.16);
+            
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--color-light);
+            color: var(--color-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============================================
+           HEADER (Específico para Empresas)
+           ============================================ */
+        .results-header {
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .results-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .logo-back {
+            color: var(--color-gray);
+            text-decoration: none;
+            font-size: var(--font-size-lg);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .logo-back:hover {
+            background: var(--color-gray-light);
+            color: var(--color-primary);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-ash {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .logo-product {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .product-badge {
+            background: var(--color-primary);
+            color: var(--color-accent);
+            padding: 6px 12px;
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: 1px solid var(--color-accent);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-gray-light);
+            background: white;
+            color: var(--color-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ============================================
+           HERO RESULTS EMPRESAS
+           ============================================ */
+        .hero-results {
+            text-align: center;
+            padding: var(--spacing-2xl) 0;
+            margin-bottom: var(--spacing-2xl);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 300;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .results-subtitle {
+            color: var(--color-gray);
+            font-size: var(--font-size-lg);
+            max-width: 600px;
+            margin: 0 auto var(--spacing-2xl);
+        }
+
+        /* ============================================
+           STATUS INDICATORS EMPRESAS
+           ============================================ */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .status-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--color-gray-light);
+            text-align: center;
+            transition: all var(--transition-base);
+        }
+
+        .status-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-accent);
+        }
+
+        .status-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto var(--spacing-md);
+        }
+
+        .status-icon.estructural {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            color: white;
+        }
+
+        .status-icon.alert {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-icon.critico {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 300;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .status-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           KPI DASHBOARD EMPRESAS
+           ============================================ */
+        .kpi-dashboard {
+            background: white;
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-dashboard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .kpi-title {
+            font-size: var(--font-size-xl);
+            font-weight: 500;
+        }
+
+        .kpi-period {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .kpi-item {
+            text-align: center;
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            background: var(--color-light);
+            transition: all var(--transition-base);
+        }
+
+        .kpi-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .kpi-name {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .kpi-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 300;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .kpi-trend {
+            font-size: var(--font-size-xs);
+            padding: 2px 8px;
+            border-radius: var(--border-radius-sm);
+            display: inline-block;
+        }
+
+        .trend-up {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .trend-down {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .trend-neutral {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        /* ============================================
+           RADAR CHART EMPRESAS
+           ============================================ */
+        .radar-container {
+            background: white;
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radar-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+        }
+
+        .radar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .radar-title {
+            font-size: var(--font-size-xl);
+            font-weight: 500;
+        }
+
+        .radar-canvas-container {
+            height: 400px;
+            position: relative;
+        }
+
+        #radarChart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* ============================================
+           RISK MATRIX EMPRESAS
+           ============================================ */
+        .risk-matrix {
+            background: white;
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-gray-light);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .risk-header {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .risk-title {
+            font-size: var(--font-size-xl);
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .risk-subtitle {
+            color: var(--color-gray);
+            font-size: var(--font-size-base);
+        }
+
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .risk-item {
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            border-left: 4px solid;
+            background: var(--color-light);
+        }
+
+        .risk-item.alto {
+            border-left-color: var(--color-danger);
+        }
+
+        .risk-item.medio {
+            border-left-color: var(--color-warning);
+        }
+
+        .risk-item.bajo {
+            border-left-color: var(--color-success);
+        }
+
+        .risk-level {
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+            text-transform: uppercase;
+        }
+
+        .risk-level.alto {
+            color: var(--color-danger);
+        }
+
+        .risk-level.medio {
+            color: var(--color-warning);
+        }
+
+        .risk-level.bajo {
+            color: var(--color-success);
+        }
+
+        .risk-description {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .risk-impact {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+        }
+
+        /* ============================================
+           STRATEGIC RECOMMENDATIONS
+           ============================================ */
+        .strategic-recommendations {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #2d2d2d 100%);
+            color: white;
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .strategic-recommendations::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            opacity: 0.1;
+            transform: translate(100px, -100px);
+        }
+
+        .strategic-header {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .strategic-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 300;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .strategic-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-base);
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .strategy-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-base);
+        }
+
+        .strategy-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+            border-color: var(--color-accent);
+        }
+
+        .strategy-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-accent);
+            color: var(--color-primary);
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .strategy-name {
+            font-size: var(--font-size-lg);
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-accent);
+        }
+
+        .strategy-description {
+            font-size: var(--font-size-sm);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .strategy-timeline {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-xs);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .timeline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-accent);
+        }
+
+        .strategy-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .btn-strategy {
+            padding: 12px 24px;
+            border-radius: var(--border-radius-md);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .results-footer {
+            margin-top: auto;
+            padding: var(--spacing-xl) 0;
+            border-top: 1px solid var(--color-gray-light);
+            text-align: center;
+        }
+
+        .footer-info {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-dark);
+        }
+
+        .footer-contact i {
+            color: var(--color-accent);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .results-container {
+                padding: 0 var(--spacing-md);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .results-title {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .radar-canvas-container {
+                height: 300px;
+            }
+            
+            .risk-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .strategy-actions {
+                flex-direction: column;
+            }
+            
+            .btn-strategy {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="results-container">
+        <!-- Header -->
+        <header class="results-header">
+            <div class="header-content">
+                <div class="results-logo">
+                    <a href="index.html" class="logo-back">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <div class="logo-text">
+                        <span class="logo-ash">ASH</span>
+                        <span class="logo-product">Empresas</span>
+                    </div>
+                </div>
+                <div class="product-badge">
+                    ESTABILIDAD ESTRUCTURAL
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" id="btnPrint" title="Imprimir">
+                        <i class="fas fa-print"></i>
+                    </button>
+                    <button class="btn-icon" id="btnDownload" title="Descargar PDF">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn-icon" id="btnShare" title="Compartir">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Results -->
+        <section class="hero-results">
+            <h1 class="results-title">Snapshot Ejecutivo</h1>
+            <p class="results-subtitle" id="resultsSubtitle">
+                Diagnóstico de estabilidad estructural completado el <span id="fechaDiagnostico">12/03/2024</span>
+            </p>
+            
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-icon estructural" id="statusIcon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <div class="status-value" id="promedioGlobal">3.2</div>
+                    <div class="status-label">PROMEDIO GLOBAL</div>
+                </div>
+                
+                <div class="status-card">
+                    <div class="status-icon critico">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="status-value" id="estadoSistema">CRÍTICO</div>
+                    <div class="status-label">ESTADO ESTRUCTURAL</div>
+                </div>
+                
+                <div class="status-card">
+                    <div class="status-icon alert">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="status-value" id="prioridadIntervencion">URGENTE</div>
+                    <div class="status-label">PRIORIDAD INTERVENCIÓN</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Dashboard -->
+        <section class="kpi-dashboard">
+            <div class="kpi-header">
+                <h2 class="kpi-title">KPIs Estructurales</h2>
+                <span class="kpi-period" id="kpiPeriod">Último trimestre</span>
+            </div>
+            <div class="kpi-grid" id="kpiGrid">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Radar Chart -->
+        <section class="radar-container">
+            <div class="radar-header">
+                <h2 class="radar-title">Perfil de Estabilidad Estructural</h2>
+            </div>
+            <div class="radar-canvas-container">
+                <canvas id="radarChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Risk Matrix -->
+        <section class="risk-matrix">
+            <div class="risk-header">
+                <h2 class="risk-title">Matriz de Riesgos Estructurales</h2>
+                <p class="risk-subtitle">Principales vulnerabilidades identificadas</p>
+            </div>
+            <div class="risk-grid" id="riskGrid">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Strategic Recommendations -->
+        <section class="strategic-recommendations">
+            <div class="strategic-header">
+                <h2 class="strategic-title">Recomendaciones Estratégicas</h2>
+                <p class="strategic-subtitle">Acciones prioritarias para fortalecimiento estructural</p>
+            </div>
+            
+            <div class="strategy-grid" id="strategyGrid">
+                <!-- Se llena dinámicamente -->
+            </div>
+            
+            <div class="strategy-actions">
+                <a href="mailto:marisol.noriega.bracamontes@gmail.com?subject=ASH%20Empresas%20-%20Solicitud%20de%20Intervención%20Estructural&body=Estimada%20Marisol,%0D%0A%0D%0ASolicito%20información%20sobre%20la%20intervención%20estructural%20recomendada%20en%20el%20diagnóstico%20ASH%20Empresas." 
+                   class="btn-strategy btn-primary">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Solicitar intervención estructural</span>
+                </a>
+                <a href="index.html" class="btn-strategy btn-secondary">
+                    <i class="fas fa-redo"></i>
+                    <span>Nuevo diagnóstico</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="results-footer">
+            <p class="footer-info">
+                Este diagnóstico fue generado automáticamente por el sistema ASH.<br>
+                Para una interpretación estratégica personalizada, contacta a tu consultor IEE.
+            </p>
+            <p class="footer-contact">
+                <i class="fas fa-envelope"></i>
+                <span>marisol.noriega.bracamontes@gmail.com</span>
+            </p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Datos de ejemplo para Empresas
+        const datosDiagnostico = {
+            producto: 'empresas',
+            fecha: new Date().toLocaleDateString('es-ES'),
+            promedioGlobal: 3.2,
+            estadoSistema: 'CRÍTICO',
+            prioridadIntervencion: 'URGENTE',
+            dimensiones: [
+                { nombre: 'Gobernanza', valor: 2.8, estado: 'critico' },
+                { nombre: 'Procesos', valor: 3.1, estado: 'alerta' },
+                { nombre: 'Tecnología', valor: 4.0, estado: 'estable' },
+                { nombre: 'Finanzas', valor: 3.5, estado: 'alerta' },
+                { nombre: 'Mercado', valor: 3.9, estado: 'estable' },
+                { nombre: 'Talento', valor: 2.5, estado: 'critico' },
+                { nombre: 'Escalabilidad', valor: 3.0, estado: 'alerta' }
+            ],
+            kpis: [
+                { nombre: 'ROI Operacional', valor: '8.2%', tendencia: 'up' },
+                { nombre: 'Eficiencia Procesos', valor: '67%', tendencia: 'down' },
+                { nombre: 'Retención Clientes', valor: '89%', tendencia: 'neutral' },
+                { nombre: 'Crecimiento Anual', valor: '12.5%', tendencia: 'up' },
+                { nombre: 'Margen Neto', valor: '15.8%', tendencia: 'up' },
+                { nombre: 'Rotación Personal', valor: '22%', tendencia: 'down' }
+            ],
+            riesgos: [
+                {
+                    nivel: 'alto',
+                    titulo: 'Falta de estructura de gobierno',
+                    descripcion: 'Ausencia de comités directivos y protocolos de decisión',
+                    impacto: 'Alto impacto en escalabilidad y control'
+                },
+                {
+                    nivel: 'alto',
+                    titulo: 'Dependencia de personas clave',
+                    descripcion: 'Procesos críticos concentrados en individuos',
+                    impacto: 'Riesgo operacional significativo'
+                },
+                {
+                    nivel: 'medio',
+                    titulo: 'Procesos no documentados',
+                    descripcion: 'Falta de manuales y procedimientos estandarizados',
+                    impacto: 'Impacto en consistencia y calidad'
+                }
+            ],
+            estrategias: [
+                {
+                    nombre: 'Gobernanza Corporativa',
+                    descripcion: 'Implementar estructura de comités y protocolos de gobierno',
+                    timeline: 'Corto plazo (1-3 meses)',
+                    icono: 'fas fa-chess-queen'
+                },
+                {
+                    nombre: 'Documentación de Procesos',
+                    descripcion: 'Crear manuales y estandarizar procedimientos críticos',
+                    timeline: 'Medio plazo (3-6 meses)',
+                    icono: 'fas fa-book'
+                },
+                {
+                    nombre: 'Plan de Sucesión',
+                    descripcion: 'Desarrollar programa de reemplazo para roles críticos',
+                    timeline: 'Medio plazo (3-6 meses)',
+                    icono: 'fas fa-user-friends'
+                }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar datos en la interfaz
+            document.getElementById('fechaDiagnostico').textContent = datosDiagnostico.fecha;
+            document.getElementById('promedioGlobal').textContent = datosDiagnostico.promedioGlobal;
+            document.getElementById('estadoSistema').textContent = datosDiagnostico.estadoSistema;
+            document.getElementById('prioridadIntervencion').textContent = datosDiagnostico.prioridadIntervencion;
+
+            // Actualizar icono de estado
+            const statusIcon = document.getElementById('statusIcon');
+            statusIcon.className = 'status-icon ' + 
+                (datosDiagnostico.estadoSistema === 'ESTABLE' ? 'estructural' :
+                 datosDiagnostico.estadoSistema === 'ALERTA' ? 'alert' : 'critico');
+
+            // Crear KPIs
+            const kpiGrid = document.getElementById('kpiGrid');
+            datosDiagnostico.kpis.forEach(kpi => {
+                const kpiItem = document.createElement('div');
+                kpiItem.className = 'kpi-item';
+                
+                const trendClass = kpi.tendencia === 'up' ? 'trend-up' : 
+                                  kpi.tendencia === 'down' ? 'trend-down' : 'trend-neutral';
+                const trendIcon = kpi.tendencia === 'up' ? 'fa-arrow-up' : 
+                                 kpi.tendencia === 'down' ? 'fa-arrow-down' : 'fa-minus';
+                
+                kpiItem.innerHTML = `
+                    <div class="kpi-name">${kpi.nombre}</div>
+                    <div class="kpi-value">${kpi.valor}</div>
+                    <div class="kpi-trend ${trendClass}">
+                        <i class="fas ${trendIcon}"></i>
+                        ${kpi.tendencia === 'up' ? 'Positivo' : 
+                          kpi.tendencia === 'down' ? 'Negativo' : 'Neutral'}
+                    </div>
+                `;
+                
+                kpiGrid.appendChild(kpiItem);
+            });
+
+            // Crear matriz de riesgos
+            const riskGrid = document.getElementById('riskGrid');
+            datosDiagnostico.riesgos.forEach(riesgo => {
+                const riskItem = document.createElement('div');
+                riskItem.className = `risk-item ${riesgo.nivel}`;
+                
+                riskItem.innerHTML = `
+                    <div class="risk-level ${riesgo.nivel}">Riesgo ${riesgo.nivel.toUpperCase()}</div>
+                    <div class="risk-description">${riesgo.titulo}</div>
+                    <div class="risk-impact">${riesgo.descripcion}</div>
+                `;
+                
+                riskGrid.appendChild(riskItem);
+            });
+
+            // Crear estrategias
+            const strategyGrid = document.getElementById('strategyGrid');
+            datosDiagnostico.estrategias.forEach(estrategia => {
+                const strategyCard = document.createElement('div');
+                strategyCard.className = 'strategy-card';
+                
+                strategyCard.innerHTML = `
+                    <div class="strategy-icon">
+                        <i class="${estrategia.icono}"></i>
+                    </div>
+                    <div class="strategy-name">${estrategia.nombre}</div>
+                    <div class="strategy-description">${estrategia.descripcion}</div>
+                    <div class="strategy-timeline">
+                        <div class="timeline-dot"></div>
+                        <span>${estrategia.timeline}</span>
+                    </div>
+                `;
+                
+                strategyGrid.appendChild(strategyCard);
+            });
+
+            // Crear gráfico radar
+            crearRadarChart();
+
+            // Botones de acción
+            document.getElementById('btnPrint').addEventListener('click', function() {
+                window.print();
+            });
+
+            document.getElementById('btnDownload').addEventListener('click', function() {
+                alert('Funcionalidad de descarga PDF en desarrollo');
+            });
+
+            document.getElementById('btnShare').addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'ASH Empresas - Snapshot Ejecutivo',
+                        text: `Diagnóstico de estabilidad estructural: ${datosDiagnostico.estadoSistema}`,
+                        url: window.location.href
+                    });
+                } else {
+                    alert('Compartir no soportado en este navegador');
+                }
+            });
+        });
+
+        function crearRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            const labels = datosDiagnostico.dimensiones.map(d => d.nombre);
+            const data = datosDiagnostico.dimensiones.map(d => d.valor);
+            
+            // Colores específicos para empresas
+            const backgroundColors = datosDiagnostico.dimensiones.map(d => 
+                d.estado === 'estable' ? 'rgba(212, 175, 55, 0.2)' : // dorado
+                d.estado === 'alerta' ? 'rgba(255, 193, 7, 0.2)' : // amarillo
+                'rgba(220, 53, 69, 0.2)' // rojo
+            );
+            
+            const borderColors = datosDiagnostico.dimensiones.map(d => 
+                d.estado === 'estable' ? 'rgb(212, 175, 55)' : // dorado
+                d.estado === 'alerta' ? 'rgb(255, 193, 7)' : // amarillo
+                'rgb(220, 53, 69)' // rojo
+            );
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Estabilidad Estructural',
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 2,
+                        pointBackgroundColor: borderColors,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1,
+                                backdropColor: 'transparent'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    family: "'Inter', sans-serif"
+                                },
+                                color: '#495057'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const estado = datosDiagnostico.dimensiones[context.dataIndex].estado;
+                                    const estadoText = estado === 'estable' ? 'Estable' :
+                                                      estado === 'alerta' ? 'Alerta' : 'Crítico';
+                                    return `${context.label}: ${context.raw}/5 (${estadoText})`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
